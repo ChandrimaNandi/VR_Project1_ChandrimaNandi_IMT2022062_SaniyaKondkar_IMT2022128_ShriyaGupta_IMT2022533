@@ -1,4 +1,4 @@
-# Part A
+# Part A -  Binary Classification Using Handcrafted Features and ML Classifiers
 
 ## Introduction
 
@@ -71,7 +71,7 @@ Feature vectors were standardized before model training to ensure consistency ac
 
 ___
 
-# Part B
+# Part B - Binary Classification Using CNN
 
 ## Introduction
 
@@ -145,7 +145,7 @@ The CNN model consists of:
   - Evaluating on larger, more diverse datasets.
 ___
 
-# Part C
+# Part C - Traditional Image Segmentation Techniques
 
 ## Introduction
 
@@ -231,7 +231,7 @@ The final mean IoU and Dice scores for each segmentation method are:
 
 ___
 
-# Part D
+# Part D - Mask Segmentation Using U-Net
 
 ## Introduction
 This project trains a U-Net model for precise mask segmentation and compares its performance with a traditional segmentation method using IoU and Dice scores.
@@ -355,6 +355,7 @@ The following libraries are required for the project:
 - `pathlib.Path` - For handling file paths.
 
 **Installation**
+
 Ensure the required packages are installed before running the code
 	
 
