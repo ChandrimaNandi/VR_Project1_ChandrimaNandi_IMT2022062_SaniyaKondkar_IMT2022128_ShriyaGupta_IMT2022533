@@ -14,12 +14,13 @@ Images are loaded from designated folders, resized, and labeled accordingly. The
 
 ## Methodology
 
-1. **. Data Preprocessing**
+1. **Data Preprocessing**
 - **Resizing:** All images are resized to **(64x64)** for uniformity and computational efficiency.
 - **Grayscale Conversion:** Reduces color-related noise and simplifies feature extraction.
 - **Histogram Equalization:** Enhances contrast by redistributing pixel intensity values, improving the visibility of facial features.
 
 2. **Feature Extraction Approaches**
+
 The following feature extraction methods were applied:
 - **Histogram of Oriented Gradients (HOG):** 
   - **Orientations:** 9 (captures fine details without excessive noise).
@@ -43,6 +44,7 @@ The following feature extraction methods were applied:
   - Retains the most significant features while reducing computational complexity.
 
 3. **Model Training**
+   
 Feature vectors were standardized before model training to ensure consistency across varying feature scales. Two machine learning models were trained:
 
 - **Support Vector Machine (SVM):**
@@ -72,16 +74,19 @@ ___
 # Part B
 
 ## Introduction
+
 This project implements a CNN-based binary classification model to detect whether individuals are wearing masks. The model is trained and evaluated on an image dataset with two classes: "with_mask" and "without_mask."
 
 ## Dataset
+
 The dataset is structured in the `data/dataset` directory with the following subdirectories:
 - `with_mask/`: Contains images of individuals wearing masks.
 - `without_mask/`: Contains images of individuals without masks.
 
 ## Methodology
 
-1. **. Data Preprocessing**
+1. **Data Preprocessing**
+   
 - The dataset was loaded using `torchvision.datasets.ImageFolder`, which automatically assigns labels based on subdirectory names.
 - A series of transformations were applied using `torchvision.transforms.Compose`:
   - **Resizing:** All images were resized to 150x150 pixels.
@@ -93,6 +98,7 @@ The dataset is structured in the `data/dataset` directory with the following sub
 - `DataLoader` instances were created with a batch size of 32.
 
 2. **Model Training:(MaskCNN)**
+   
 The CNN model consists of:
 - **Two convolutional layers** with 100 filters, a 3x3 kernel, and padding of 1.
 - **Max-pooling layers** (2x2) to reduce spatial dimensions.
@@ -117,6 +123,7 @@ The CNN model consists of:
 - **Data Augmentation:** Included resizing, rotation, horizontal flipping, and cropping.
 
 4. **Evaluation:**
+   
 - The best model (based on validation loss) was saved.
 - The model was evaluated on the test dataset:
   - Model predictions were compared with true labels.
@@ -141,9 +148,11 @@ ___
 # Part C
 
 ## Introduction
+
 This section explores the implementation and evaluation of three traditional image segmentation techniques—Gaussian Mixture Model (GMM), Otsu's thresholding, and the Watershed algorithm—on a dataset of face crops. The performance of these methods is compared using the Intersection over Union (IoU) and Dice score metrics.
 
 ## Dataset
+
 The dataset consists of images and their corresponding segmentation masks. It is structured as follows:
 - `img/`: Original images.
 - `face_crop/`: Cropped masked face images.
@@ -151,7 +160,8 @@ The dataset consists of images and their corresponding segmentation masks. It is
 
 ## Methodology
 
-1. **. Data Preprocessing**
+1. **Data Preprocessing**
+
 - Paths to image and ground truth mask folders are defined.
 - Image and mask filenames are retrieved using `os.listdir()`.
 - For each image-mask pair:
@@ -159,7 +169,8 @@ The dataset consists of images and their corresponding segmentation masks. It is
   - The ground truth mask is loaded as a grayscale image using `cv2.imread(gt_path, cv2.IMREAD_GRAYSCALE)`, with error handling.
   - The ground truth mask is converted to a PyTorch tensor (`torch.uint8`).
 
-2. **Model Training:** 
+2. **Model Training:**
+   
 - The three segmentation methods (`gmm_segmentation`, `otsu_segmentation`, and `watershed_segmentation`) are applied to the images within a `try-except` block to handle potential errors.
 - The predicted masks are resized to match the dimensions of the ground truth masks using `cv2.resize()` with `cv2.INTER_NEAREST` interpolation.
 - The resized masks are converted back to PyTorch tensors (`torch.uint8`) for evaluation.
@@ -170,7 +181,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
   - Covariance type: **"tied"** (shared covariance across components).
   - Random state: **42** (ensures reproducibility).
   
-- **Otsu’s Thresholding:** 
+- **Otsu’s Thresholding:**
   - An automatic thresholding technique that dynamically determines the optimal threshold without manual hyperparameters.
   
 - **Watershed Algorithm:** 
@@ -232,7 +243,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
 - `face_crop_segmentation/`: Segmentation masks.
 
 ## Methodology
-1. **. Data Preprocessing**
+1. **Data Preprocessing**
 - **Loading & Resizing:** 
   - Images are loaded in **RGB mode** and masks in **grayscale**. 
   - Both are resized to **(256, 256)**.
