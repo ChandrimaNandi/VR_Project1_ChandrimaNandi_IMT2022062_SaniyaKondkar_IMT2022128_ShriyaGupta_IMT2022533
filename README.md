@@ -14,12 +14,12 @@ Images are loaded from designated folders, resized, and labeled accordingly. The
 
 ## Methodology
 
-1. **Data Preprocessing**
+**1. Data Preprocessing**
 - **Resizing:** All images are resized to **(64x64)** for uniformity and computational efficiency.
 - **Grayscale Conversion:** Reduces color-related noise and simplifies feature extraction.
 - **Histogram Equalization:** Enhances contrast by redistributing pixel intensity values, improving the visibility of facial features.
 
-2. **Feature Extraction Approaches**
+**2. Feature Extraction Approaches**
 
 The following feature extraction methods were applied:
 - **Histogram of Oriented Gradients (HOG):** 
@@ -43,7 +43,7 @@ The following feature extraction methods were applied:
   - Used for dimensionality reduction.
   - Retains the most significant features while reducing computational complexity.
 
-3. **Model Training**
+**3. Model Training**
    
 Feature vectors were standardized before model training to ensure consistency across varying feature scales. Two machine learning models were trained:
 
@@ -85,7 +85,7 @@ The dataset is structured in the `data/dataset` directory with the following sub
 
 ## Methodology
 
-1. **Data Preprocessing**
+**1. Data Preprocessing**
    
 - The dataset was loaded using `torchvision.datasets.ImageFolder`, which automatically assigns labels based on subdirectory names.
 - A series of transformations were applied using `torchvision.transforms.Compose`:
@@ -97,7 +97,7 @@ The dataset is structured in the `data/dataset` directory with the following sub
 - The dataset was split into 80% training and 20% testing using `torch.utils.data.random_split`.
 - `DataLoader` instances were created with a batch size of 32.
 
-2. **Model Training:(MaskCNN)**
+**2. Model Training:(MaskCNN)**
    
 The CNN model consists of:
 - **Two convolutional layers** with 100 filters, a 3x3 kernel, and padding of 1.
@@ -114,7 +114,7 @@ The CNN model consists of:
   - Forward pass → loss calculation → backward pass → weight update.
   - Validation loss and accuracy computed using `model.eval()`.
 
-3. **Hyperparameters & Tuning**
+**3. Hyperparameters & Tuning**
 - **CNN Architecture:** Two convolutional layers, two max-pooling layers, two fully connected layers.
 - **Optimizer:** Adam with a learning rate of 0.001.
 - **Loss Function:** Cross-Entropy Loss.
@@ -122,7 +122,7 @@ The CNN model consists of:
 - **Number of Epochs:** 15 (early stopping applied).
 - **Data Augmentation:** Included resizing, rotation, horizontal flipping, and cropping.
 
-4. **Evaluation:**
+**4. Evaluation:**
    
 - The best model (based on validation loss) was saved.
 - The model was evaluated on the test dataset:
@@ -160,7 +160,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
 
 ## Methodology
 
-1. **Data Preprocessing**
+**1. Data Preprocessing**
 
 - Paths to image and ground truth mask folders are defined.
 - Image and mask filenames are retrieved using `os.listdir()`.
@@ -169,13 +169,13 @@ The dataset consists of images and their corresponding segmentation masks. It is
   - The ground truth mask is loaded as a grayscale image using `cv2.imread(gt_path, cv2.IMREAD_GRAYSCALE)`, with error handling.
   - The ground truth mask is converted to a PyTorch tensor (`torch.uint8`).
 
-2. **Model Training:**
+**2. Model Training:**
    
 - The three segmentation methods (`gmm_segmentation`, `otsu_segmentation`, and `watershed_segmentation`) are applied to the images within a `try-except` block to handle potential errors.
 - The predicted masks are resized to match the dimensions of the ground truth masks using `cv2.resize()` with `cv2.INTER_NEAREST` interpolation.
 - The resized masks are converted back to PyTorch tensors (`torch.uint8`) for evaluation.
 
-3. **Hyperparameters & Tuning**
+**3. Hyperparameters & Tuning**
 - **GMM Segmentation:**
   - Number of components: **2** (assumes foreground and background).
   - Covariance type: **"tied"** (shared covariance across components).
@@ -190,7 +190,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
   - Number of iterations for dilation: **3**.
   - Distance transform threshold factor: **0.5**.
 
-4. **Evaluation:** 
+**4. Evaluation:** 
 - The `evaluate_segmentation` function computes IoU and Dice scores by comparing predicted masks with ground truth masks.
 - Per-image scores are printed to monitor performance.
 - Mean IoU and Dice scores for each method are computed using `np.mean()`.
@@ -243,7 +243,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
 - `face_crop_segmentation/`: Segmentation masks.
 
 ## Methodology
-1. **Data Preprocessing**
+**1. Data Preprocessing**
 - **Loading & Resizing:** 
   - Images are loaded in **RGB mode** and masks in **grayscale**. 
   - Both are resized to **(256, 256)**.
@@ -262,7 +262,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
 - **Conversion to Tensors:** 
   - Processed images and masks are converted into **torch tensors** for model training.
   
-2. **Model Training:** 
+**2. Model Training:** 
 - **Encoder (Downsampling Path)**:
   - 4 convolutional blocks with ReLU activation and batch normalization.
   - Max pooling layers reduce spatial dimensions.
@@ -280,7 +280,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
   - **1x1 convolution** to generate a single-channel mask.
   - **Sigmoid activation** to produce pixel-wise probabilities.
   
-3. **Hyperparameters & Tuning**
+**3. Hyperparameters & Tuning**
 - **Learning Rate:** `5e-4`, reduced dynamically using **ReduceLROnPlateau**.
 - **Batch Size:** Tuned based on GPU memory constraints.
 - **Epochs:** `50` (Early stopping applied).
@@ -294,7 +294,7 @@ The dataset consists of images and their corresponding segmentation masks. It is
   - Adaptive learning rate for faster convergence.
   - Momentum-based updates for stability.
 
-4. **Evaluation:** 
+**4. Evaluation:** 
 - **IoU (Intersection over Union):**
   - Measures segmentation accuracy.
   - Thresholded at `0.5` for binary masks.
